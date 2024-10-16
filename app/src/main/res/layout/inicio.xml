@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/register"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_background"
+    android:gravity="top"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top"
+        android:orientation="vertical">
+
+        <!-- Logo de la aplicación -->
+        <ImageView
+            android:layout_width="250dp"
+            android:layout_height="130dp"
+            android:src="@drawable/logo"
+            android:layout_gravity="center" />
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            app:cardElevation="8dp"
+            app:cardCornerRadius="16dp"
+            app:cardBackgroundColor="#0A689F">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Grabar"
+                android:textColor="#FFFFFF"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="150dp"/>
+
+
+            <!-- Botón de grabar -->
+            <Button
+                android:id="@+id/btn_grabar"
+                android:layout_width="250dp"
+                android:layout_height="150dp"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#7DFF5B"
+                android:layout_marginBottom="20dp"
+                android:drawableTop="@drawable/mic_24px"
+                android:drawablePadding="10dp"
+                android:padding="16dp"
+                android:layout_gravity="center" />
+
+
+                <!-- Botón de Registro -->
+                <Button
+                    android:id="@+id/btn_registro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Registro"
+                    android:backgroundTint="#F3CF35"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginTop="10dp"
+                    android:padding="10dp" />
+
+                <!-- Botón de Notificaciones -->
+                <Button
+                    android:id="@+id/btn_notificaciones"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Notificaciones"
+                    android:backgroundTint="#F3CF35"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginTop="10dp"
+                    android:padding="10dp" />
+
+                <!-- Botón de Directorio -->
+                <Button
+                    android:id="@+id/btn_directorio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Directorio"
+                    android:backgroundTint="#F3CF35"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginTop="10dp"
+                    android:padding="10dp" />
+
+                <!-- Icono del perfil en la esquina inferior derecha -->
+                <ImageView
+                    android:id="@+id/userIcon"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="30dp" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+</RelativeLayout>
