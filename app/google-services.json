@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "85445452171",
+    "project_id": "animositosbeta",
+    "storage_bucket": "animositosbeta.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:85445452171:android:0504be69e6036211828f8e",
+        "android_client_info": {
+          "package_name": "com.example.animositosbeta"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjXK1nCU2NfKiAprPnL9-SLbt1-Lcays0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
