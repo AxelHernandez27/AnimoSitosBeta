@@ -11,8 +11,7 @@ class RegisterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.registrar) // Asegúrate de que este sea el nombre correcto del layout
-
+        setContentView(R.layout.registrar)
         // Obtener referencias a los elementos de la UI
         val emailEditText: EditText = findViewById(R.id.email)
         val phoneNumberEditText: EditText = findViewById(R.id.phone_number)
@@ -50,6 +49,8 @@ class RegisterActivity : AppCompatActivity() {
 
             Toast.makeText(this, "Registro exitoso", Toast.LENGTH_SHORT).show()
             // Puedes iniciar una nueva actividad o realizar cualquier otra acción aquí
+            setContentView(R.layout.registrar2)
+
         }
     }
 }

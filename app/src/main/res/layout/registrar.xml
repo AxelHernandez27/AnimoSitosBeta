@@ -65,7 +65,7 @@
                     android:inputType="textEmailAddress"
                     android:padding="10dp"
                     android:background="@drawable/rounded_edit_text"
-                    android:textColor="#FFFFFF"
+                    android:textColor="#070707"
                     android:textColorHint="#FFFFFF"
                     android:layout_marginBottom="5dp"
                     />
@@ -86,7 +86,7 @@
                     android:inputType="phone"
                     android:padding="10dp"
                     android:background="@drawable/rounded_edit_text"
-                    android:textColor="#FFFFFF"
+                    android:textColor="#070707"
                     android:textColorHint="#FFFFFF"
                     android:layout_marginBottom="5dp"
                     />
@@ -108,7 +108,7 @@
                     android:inputType="textPassword"
                     android:padding="10dp"
                     android:background="@drawable/rounded_edit_text"
-                    android:textColor="#FFFFFF"
+                    android:textColor="#070707"
                     android:textColorHint="#FFFFFF"
                     android:layout_marginBottom="5dp"
                     />
@@ -130,7 +130,7 @@
                     android:inputType="textPassword"
                     android:padding="10dp"
                     android:background="@drawable/rounded_edit_text"
-                    android:textColor="#FFFFFF"
+                    android:textColor="#070707"
                     android:textColorHint="#FFFFFF"
                     android:layout_marginBottom="5dp"
                     />
