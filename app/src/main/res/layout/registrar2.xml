@@ -199,7 +199,7 @@
                     android:inputType="text"
                     android:padding="10dp"
                     android:background="@drawable/rounded_edit_text"
-                    android:textColor="#FFFFFF"
+                    android:textColor="#070707"
                     android:textColorHint="#FFFFFF"
                     android:layout_marginBottom="5dp"
                     />

@@ -32,6 +32,15 @@
             android:exported="true">
         </activity>
 
+        <activity
+            android:name=".WelcomeActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".InitActivity"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>

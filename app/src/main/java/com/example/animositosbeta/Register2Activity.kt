@@ -1,9 +1,11 @@
 package com.example.animositosbeta
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -67,6 +69,10 @@ class Register2Activity : AppCompatActivity() {
                         .add(kidData)
                         .addOnSuccessListener {
                             Toast.makeText(this, "Datos guardados exitosamente", Toast.LENGTH_SHORT).show()
+                            // Redirigir a la actividad de bienvenida
+                            val intent = Intent(this, WelcomeActivity::class.java)
+                            startActivity(intent)
+                            finish() // Opcional: cierra esta actividad
                         }
                         .addOnFailureListener { e ->
                             Toast.makeText(this, "Error al guardar los datos del niño: ${e.message}", Toast.LENGTH_SHORT).show()
@@ -77,4 +83,5 @@ class Register2Activity : AppCompatActivity() {
                 }
         }
     }
+
 }
