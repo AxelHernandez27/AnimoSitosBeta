@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_background"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top"
+        android:orientation="vertical">
+
+        <!-- Logo de la aplicación -->
+        <ImageView
+            android:layout_width="250dp"
+            android:layout_height="130dp"
+            android:src="@drawable/logo"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp" />
+
+        <!-- Contenedor que permite superponer el CardView y la imagen -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp">
+
+            <!-- Imagen del doctor, sobrepuesta y elevada -->
+            <ImageView
+                android:id="@+id/doctorImage"
+                android:layout_width="203dp"
+                android:layout_height="202dp"
+                android:layout_gravity="center_horizontal"
+                android:translationY="-5dp"
+                android:translationZ="15dp"
+                android:src="@drawable/doctor"
+                android:background="@drawable/circular_background"
+                android:scaleType="centerCrop"
+                android:contentDescription="Imagen de doctor" />
+
+            <!-- Nombre del doctor sobre la imagen -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dr. Nombre Apellido"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:fontFamily="sans-serif-medium"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="171dp"
+                android:background="#80000000"
+                android:padding="1dp"
+                android:gravity="center"
+                android:translationZ="20dp" /> <!-- Para que el texto esté frente a la imagen -->
+
+            <!-- CardView principal -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="80dp"
+                app:cardElevation="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardBackgroundColor="#0A689F">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- Contenido del CardView -->
+
+
+                    <!-- RatingBar para calificación dentro del CardView -->
+                    <RatingBar
+                        android:id="@+id/ratingBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="110dp"
+                        android:numStars="5"
+                        android:rating="0"
+                        android:stepSize="1"
+                        android:layout_marginBottom="20dp"
+                        android:progressTint="@android:color/holo_orange_light"
+                    android:backgroundTint="@android:color/darker_gray" />
+
+                    <ImageView
+                        android:id="@+id/userIcon"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="end"
+                        android:layout_margin="16dp"
+                        android:background="@drawable/circular_background"
+                        android:contentDescription="Icono de usuario"
+                        android:padding="10dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/asistente" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </FrameLayout>
+    </LinearLayout>
+</RelativeLayout>
