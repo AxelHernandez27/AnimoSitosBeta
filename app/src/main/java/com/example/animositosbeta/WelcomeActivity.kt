@@ -21,29 +21,27 @@ class WelcomeActivity : AppCompatActivity() {
         mainMessage = findViewById(R.id.main_message)
         welcomeText = findViewById(R.id.welcome_text)
 
-        // Obtener la raíz del ConstraintLayout
-        val rootView: View = findViewById(R.id.bienvenida)
+        // Obtener el nombre del padre desde el Intent
+        val parentName = intent.getStringExtra("PARENT_NAME") ?: "Usuario"
+        welcomeText?.text = "Bienvenido, $parentName!" // Saludo personalizado
 
         // Mostrar el mensaje de bienvenida
         welcomeText?.visibility = View.VISIBLE
 
-        // Configurar un Handler para mostrar el mensaje principal después de 30 segundos
+        // Configurar un Handler para mostrar el mensaje principal y redirigir después de 30 segundos
         Handler().postDelayed({
+            // Mostrar el mensaje adicional
             welcomeText?.visibility = View.GONE
             mainMessage?.visibility = View.VISIBLE
-        }, 30000) // 30000 ms (30 segundos)
 
-        // Configurar otro Handler para mostrar el mensaje adicional después de 30 segundos más
-        Handler().postDelayed({
-            mainMessage?.visibility = View.GONE
-            additionalMessage?.visibility = View.VISIBLE
-
-            // Redirigir a la pantalla de inicio después de 60 segundos (1 minuto)
+            // Después de mostrar el mensaje principal, redirigir a InitActivity
             Handler().postDelayed({
+                mainMessage?.visibility = View.GONE
+                additionalMessage?.visibility = View.VISIBLE
                 val intent = Intent(this, InitActivity::class.java)
                 startActivity(intent)
                 finish() // Cerrar la actividad actual
-            }, 60000) // 60000 ms (60 segundos)
-        }, 60000) // 60000 ms (1 minuto)
+            }, 10000) // 10000 ms (10 segundos)
+        }, 10000) // 10000 ms (10 segundos)
     }
 }

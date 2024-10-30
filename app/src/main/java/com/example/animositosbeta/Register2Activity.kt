@@ -71,6 +71,7 @@ class Register2Activity : AppCompatActivity() {
                             Toast.makeText(this, "Datos guardados exitosamente", Toast.LENGTH_SHORT).show()
                             // Redirigir a la actividad de bienvenida
                             val intent = Intent(this, WelcomeActivity::class.java)
+                            intent.putExtra("PARENT_NAME", parentName) // Añadir el nombre del usuario
                             startActivity(intent)
                             finish() // Opcional: cierra esta actividad
                         }

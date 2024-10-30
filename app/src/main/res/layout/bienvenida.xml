@@ -61,7 +61,7 @@
             android:id="@+id/main_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="19dp"
+            android:layout_marginTop="60dp"
             android:gravity="center"
             android:text="Soy Lola, y seré tu guía en esta increíble aventura con tu pequeño(a)"
             android:textColor="@android:color/black"
@@ -70,14 +70,14 @@
 
         <TextView
             android:id="@+id/additional_message"
-            android:layout_width="wrap_content"
+            android:layout_width="268dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="19dp"
+            android:layout_marginTop="50dp"
             android:gravity="center"
             android:text="¡Estaré siempre contigo!\nSi necesitas algo solo búscame en el icono con mi foto, será un placer ayudarte..."
             android:textColor="@android:color/black"
             android:textSize="15sp"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
     </LinearLayout>
 
