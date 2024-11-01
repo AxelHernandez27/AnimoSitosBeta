@@ -63,6 +63,8 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this, "Email o contraseña incorrectos", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, InitActivity::class.java)
+                    startActivity(intent)
                 }
             }
             .addOnFailureListener { e ->

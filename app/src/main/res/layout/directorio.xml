@@ -61,18 +61,12 @@
                         android:drawablePadding="8dp"
                         android:layout_marginBottom="5dp" />
 
-                    <!-- Botón con el nombre "Doctor Axel" -->
-                    <Button
-                        android:id="@+id/doctor_button"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:backgroundTint="#CCFF66"
-                        android:text="Doctor Axel"
-                        android:textColor="#000000"
-                        android:textSize="16sp"
-                        android:padding="16dp"
-                        app:cornerRadius="16dp" />
+                        />
 
                     <!-- Icono del perfil en la esquina inferior derecha -->
                     <ImageView
