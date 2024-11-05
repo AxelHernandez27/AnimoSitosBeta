@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    android:background="@drawable/comment_background"
+    android:layout_marginBottom="8dp">
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/person_24px"
+        android:layout_gravity="center_vertical"
+        android:scaleType="centerCrop"
+        android:background="@drawable/circular_background"
+        android:contentDescription="Icono de usuario" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/commentText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Este es un comentario de ejemplo para mostrar cómo se verá el diseño de los comentarios."
+            android:textColor="#000000"
+            android:textSize="14sp" />
+
+        <!-- RatingBar para mostrar la calificación del doctor -->
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:rating="4"
+        android:stepSize="1"
+        android:layout_marginTop="4dp"
+        android:isIndicator="true"
+        android:layout_gravity="start" />
+    </LinearLayout>
+</LinearLayout>

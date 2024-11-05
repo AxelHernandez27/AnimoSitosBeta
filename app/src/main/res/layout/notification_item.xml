@@ -5,19 +5,62 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="8dp"
     app:cardCornerRadius="16dp"
-    app:cardElevation="4dp">
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="#F3CF35">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:orientation="vertical">
 
+        <!-- Contenedor para el icono y botón de cerrar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:padding="8dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <!-- Icono de notificación -->
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/notifications_24px"
+                app:tint="#000000" />
+
+            <!-- Espacio entre el icono y el título -->
+            <Space
+                android:layout_width="16dp"
+                android:layout_height="match_parent" />
+
+            <!-- Título de la notificación -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Nueva Notificación"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <!-- Botón de eliminar notificación (X) en la esquina derecha -->
+            <ImageView
+                android:id="@+id/clearNotificationButton"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/cancel_24px"
+                app:tint="#000000" />
+        </LinearLayout>
+
+        <!-- Descripción de la notificación -->
         <TextView
             android:id="@+id/notification_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#000000"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:padding="16dp"
+            android:text="Detalles adicionales de la notificación..." /> <!-- Este texto se puede cambiar según la notificación -->
     </LinearLayout>
 </androidx.cardview.widget.CardView>

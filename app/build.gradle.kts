@@ -53,9 +53,11 @@ dependencies {
 
     implementation(platform("com.google.firebase:firebase-bom:33.5.0"))
     implementation("com.google.firebase:firebase-analytics")
-
     implementation ("com.google.firebase:firebase-firestore:24.5.0")
     implementation ("com.google.firebase:firebase-storage:20.2.0")
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
+
+
 
 
 }

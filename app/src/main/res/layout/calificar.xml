@@ -110,7 +110,7 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_marginBottom="16dp" />
 
-                        <!-- Lista de comentarios de otros usuarios -->
+                        <!-- Título para la lista de comentarios -->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -121,41 +121,16 @@
                             android:fontFamily="sans-serif-medium"
                             android:layout_gravity="start" />
 
-                        <LinearLayout
-                            android:id="@+id/commentsContainer"
+                        <!-- RecyclerView para mostrar la lista de comentarios -->
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerViewComments"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:padding="8dp">
-
-                            <!-- Ejemplo de un comentario -->
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:padding="8dp"
-                                android:background="@drawable/comment_background"
-                                android:layout_marginBottom="8dp">
-
-                                <ImageView
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
-                                    android:src="@drawable/person_24px"
-                                    android:layout_gravity="center_vertical"
-                                    android:scaleType="centerCrop"
-                                    android:background="@drawable/circular_background"
-                                    android:contentDescription="Icono de usuario" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="8dp"
-                                    android:text="Este es un comentario de ejemplo para mostrar cómo se verá el diseño de los comentarios."
-                                    android:textColor="#000000"
-                                    android:textSize="14sp"
-                                    android:layout_gravity="center_vertical" />
-                            </LinearLayout>
-                        </LinearLayout>
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:padding="8dp"
+                            android:clipToPadding="false"
+                            android:scrollbars="vertical" />
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
