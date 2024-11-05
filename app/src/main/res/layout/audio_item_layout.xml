@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardElevation="4dp"
+    app:cardCornerRadius="12dp"
+    app:cardBackgroundColor="#FFEB3B">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <!-- Título del Audio en la parte superior -->
+        <TextView
+            android:id="@+id/audioTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Título del Audio"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Fecha y hora de grabación del audio -->
+        <TextView
+            android:id="@+id/audioDateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fecha y Hora de Grabación: 01/01/2024 12:00 PM"
+            android:textColor="#000000"
+            android:textSize="14sp"
+            android:layout_below="@id/audioTitle"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Botón de reproducción/pausa a la izquierda debajo del título -->
+        <ImageButton
+            android:id="@+id/btnPlayPause"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/audioDateTime"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Play/Pause"
+            android:src="@drawable/play_pause_24px"
+            app:tint="#000000" />
+
+        <!-- Barra de progreso del audio -->
+        <SeekBar
+            android:id="@+id/seekBarAudio"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/audioDateTime"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="12dp"
+            android:layout_toEndOf="@id/btnPlayPause"
+            android:max="100"
+            android:progress="0" />
+
+        <!-- Botones de Editar y Eliminar a la derecha -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:orientation="horizontal"
+            android:layout_below="@id/audioDateTime"
+            android:layout_marginTop="8dp">
+
+            <ImageButton
+                android:id="@+id/btnEdit"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Editar"
+                android:src="@drawable/edit_24px"
+                app:tint="#000000"
+                android:layout_marginStart="12dp"/>
+
+            <ImageButton
+                android:id="@+id/btnDelete"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/delete_24px"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Eliminar"
+                app:tint="#000000"
+                android:layout_marginStart="12dp"/>
+        </LinearLayout>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

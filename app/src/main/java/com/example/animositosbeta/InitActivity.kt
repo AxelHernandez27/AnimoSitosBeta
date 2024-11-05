@@ -13,7 +13,7 @@ class InitActivity : AppCompatActivity() {
 
         val btnNotificaciones: Button = findViewById(R.id.btn_notificaciones)
         val btnDirectorio: Button = findViewById(R.id.btn_directorio)
-
+        val btnAudios: Button = findViewById(R.id.btn_registro)
         btnNotificaciones.setOnClickListener {
             // Inicia la actividad de Notificaciones
             val intent = Intent(this, NotificationsActivity::class.java)
@@ -25,5 +25,11 @@ class InitActivity : AppCompatActivity() {
             val intent = Intent(this, DirectoryActivity::class.java)
             startActivity(intent)
         }
+
+        btnAudios.setOnClickListener{
+            val intent = Intent(this, AudioActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 }
