@@ -11,12 +11,16 @@ class InitActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.inicio)
 
+        val kidName = intent.getStringExtra("kidName") ?: ""
         val btnNotificaciones: Button = findViewById(R.id.btn_notificaciones)
         val btnDirectorio: Button = findViewById(R.id.btn_directorio)
         val btnAudios: Button = findViewById(R.id.btn_registro)
+
         btnNotificaciones.setOnClickListener {
             // Inicia la actividad de Notificaciones
-            val intent = Intent(this, NotificationsActivity::class.java)
+            val intent = Intent(this, NotificationsActivity::class.java).apply {
+                putExtra("kidName", kidName) // Pasar el nombre del niño a NotificationsActivity
+            }
             startActivity(intent)
         }
 

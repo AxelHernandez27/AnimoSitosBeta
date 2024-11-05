@@ -1,13 +1,18 @@
 package com.example.animositosbeta
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class NotificationAdapter(private var notificationList: List<Notification>, private val context: Context) :
+class NotificationAdapter(
+    private var notificationList: List<Notification>,
+    private val context: Context,
+    private val kidName: String // Recibe el nombre del niño
+) :
     RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder>() {
 
     class NotificationViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -21,7 +26,9 @@ class NotificationAdapter(private var notificationList: List<Notification>, priv
 
     override fun onBindViewHolder(holder: NotificationViewHolder, position: Int) {
         val notification = notificationList[position]
-        holder.messageTextView.text = notification.message
+        // Reemplaza "[nombre del niño]" con el valor de kidName
+        val message = notification.message.replace("[nombre del niño]", kidName)
+        holder.messageTextView.text = message
     }
 
     override fun getItemCount() = notificationList.size
