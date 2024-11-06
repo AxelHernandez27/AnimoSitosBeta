@@ -50,6 +50,7 @@ class DirectoryActivity : AppCompatActivity() {
                 doctorList.clear()
                 for (document in documents) {
                     val doctor = document.toObject(Doctor::class.java)
+                    doctor.id = document.id  // Asignar el ID del documento de Firestore al campo `id` de Doctor
                     doctorList.add(doctor)
                 }
                 doctorAdapter.updateData(doctorList)
@@ -58,6 +59,7 @@ class DirectoryActivity : AppCompatActivity() {
                 Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
             }
     }
+
 
     private fun filterDoctors(query: String) {
         val filteredList = doctorList.filter {

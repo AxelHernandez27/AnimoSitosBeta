@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 
 class DoctorAdapter(private var doctorList: List<Doctor>, private val context: Context) :
@@ -31,10 +32,12 @@ class DoctorAdapter(private var doctorList: List<Doctor>, private val context: C
         // Manejo del click para redirigir a la pantalla de información del doctor
         holder.doctorButton.setOnClickListener {
             val intent = Intent(context, FeedbackActivity::class.java).apply {
+                putExtra("DOCTOR_ID", doctor.id)
                 putExtra("DOCTOR_NAME", doctor.name)
                 putExtra("DOCTOR_LASTNAME", doctor.lastname)
                 putExtra("DOCTOR_GENDER", doctor.gender)
             }
+
             context.startActivity(intent)
         }
     }

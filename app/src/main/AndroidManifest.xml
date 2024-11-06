@@ -67,6 +67,7 @@
             android:name=".FeedbackActivity"
             android:exported="true">
         </activity>
+
         <activity
             android:name=".AudioActivity"
             android:exported="true">
