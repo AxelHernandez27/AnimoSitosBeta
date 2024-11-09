@@ -30,7 +30,7 @@
         android:theme="@style/Theme.AnimositosBeta"
         tools:targetApi="31">
         <activity
-            android:name=".InitActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -54,10 +54,10 @@
             android:exported="true">
         </activity>
 
-        <!--<activity
+        <activity
             android:name=".InitActivity"
             android:exported="true">
-        </activity>-->
+        </activity>
 
         <activity
             android:name=".NotificationsActivity"

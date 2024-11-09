@@ -46,7 +46,7 @@ class AudioActivity : AppCompatActivity() {
                 item.downloadUrl.addOnSuccessListener { uri ->
                     // Suponiendo que el nombre del archivo de audio incluye el título y la fecha
                     val audioTitle = item.name.substringBeforeLast(".")
-                    val dateTime = "Fecha desconocida" // Esto debería extraerse o configurarse según el caso
+                    val dateTime = "Autor desconocido" // Esto debería extraerse o configurarse según el caso
                     val audioUrl = uri.toString()
 
                     // Crear el objeto Audio y añadirlo a la lista
@@ -62,7 +62,7 @@ class AudioActivity : AppCompatActivity() {
 
     private fun editAudio(audio: Audio) {
         val editText = EditText(this).apply {
-            setText(audio.title)  // Muestra el nombre completo con la extensión
+            setText(audio.title)
             setSelection(text.length)
         }
 
@@ -72,12 +72,35 @@ class AudioActivity : AppCompatActivity() {
             .setPositiveButton("Guardar") { dialogInterface, _ ->
                 val newTitle = editText.text.toString()
                 if (newTitle.isNotEmpty()) {
-                    // Solo actualizar el título del audio, sin cambiar la extensión ni la URL
-                    audio.title = newTitle.substringBeforeLast(".") // Elimina la extensión para la visualización
-                    audioAdapter.notifyDataSetChanged() // Actualiza la lista
+                    val oldAudioRef = FirebaseStorage.getInstance().getReferenceFromUrl(audio.audioUrl)
+                    //val fileExtension = audio.audioUrl.substringAfterLast(".", "")
+                    val newFileName = newTitle
+                    val newAudioRef = storageRef.child(newFileName)
 
-                    // Muestra mensaje de éxito
-                    Toast.makeText(this, "Nombre actualizado a ${audio.title}", Toast.LENGTH_SHORT).show()
+                    oldAudioRef.getBytes(Long.MAX_VALUE).addOnSuccessListener { bytes ->
+                        newAudioRef.putBytes(bytes).addOnSuccessListener {
+                            oldAudioRef.delete().addOnCompleteListener { task ->
+
+                                if (task.isSuccessful) {
+                                    // Limpia los parámetros adicionales de la URL antes de actualizarla
+                                    val cleanUrl = newAudioRef.toString().substringBefore("?")
+
+                                    audio.title = newFileName
+                                    audio.audioUrl = cleanUrl  // Actualiza la URL del audio sin los parámetros
+                                    audioAdapter.notifyDataSetChanged()
+
+                                    Toast.makeText(this, "Nombre actualizado a $newFileName", Toast.LENGTH_SHORT).show()
+                                } else {
+                                    Toast.makeText(this, "Error al eliminar el archivo antiguo", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        }.addOnFailureListener {
+                            Toast.makeText(this, "Error al subir el archivo con el nuevo nombre", Toast.LENGTH_SHORT).show()
+                        }
+                    }.addOnFailureListener { exception ->
+                        Log.e("AudioActivity", "Error al descargar el archivo: ${exception.message}")
+                        Toast.makeText(this, "Error al descargar el archivo.", Toast.LENGTH_SHORT).show()
+                    }
                 } else {
                     Toast.makeText(this, "El título no puede estar vacío", Toast.LENGTH_SHORT).show()
                 }
@@ -90,7 +113,6 @@ class AudioActivity : AppCompatActivity() {
 
         dialog.show()
     }
-
 
     private fun deleteAudio(audio: Audio) {
         val audioRef = FirebaseStorage.getInstance().getReferenceFromUrl(audio.audioUrl)
