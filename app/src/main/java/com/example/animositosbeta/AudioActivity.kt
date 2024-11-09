@@ -61,76 +61,39 @@ class AudioActivity : AppCompatActivity() {
     }
 
     private fun editAudio(audio: Audio) {
-        // Crear un EditText dentro del cuadro de diálogo
         val editText = EditText(this).apply {
-            setText(audio.title)  // Coloca el nombre actual del audio en el EditText
-            setSelection(text.length)  // Coloca el cursor al final del texto
+            setText(audio.title)  // Muestra el nombre completo con la extensión
+            setSelection(text.length)
         }
 
-        // Crear el cuadro de diálogo
         val dialog = AlertDialog.Builder(this)
             .setTitle("Editar Nombre del Audio")
-            .setView(editText)  // Agrega el EditText al diálogo
+            .setView(editText)
             .setPositiveButton("Guardar") { dialogInterface, _ ->
                 val newTitle = editText.text.toString()
                 if (newTitle.isNotEmpty()) {
-                    // Codificar el nombre del archivo para manejar espacios y caracteres especiales
-                    val encodedFileName = Uri.encode(audio.title)
-                    val fileExtension = audio.title.substringAfterLast(".", "")
-                    val newFileName = "$newTitle.$fileExtension" // Nuevo nombre con la misma extensión
+                    // Solo actualizar el título del audio, sin cambiar la extensión ni la URL
+                    audio.title = newTitle.substringBeforeLast(".") // Elimina la extensión para la visualización
+                    audioAdapter.notifyDataSetChanged() // Actualiza la lista
 
-                    // Referencia al archivo original (sin codificar el nombre)
-                    val oldAudioRef = storageRef.child("audios/$encodedFileName")
-
-                    // Verificar si el archivo original existe
-                    oldAudioRef.metadata.addOnSuccessListener {
-                        Log.d("AudioActivity", "Archivo encontrado: ${audio.title}")
-                        // El archivo existe, ahora descargamos los bytes
-                        oldAudioRef.getBytes(Long.MAX_VALUE).addOnSuccessListener { bytes ->
-                            // Subimos el archivo con el nuevo nombre
-                            val newAudioRef = storageRef.child("audios/$newFileName") // Nueva ruta con el nombre actualizado
-                            newAudioRef.putBytes(bytes).addOnSuccessListener {
-                                // Si la carga es exitosa, eliminamos el archivo original
-                                oldAudioRef.delete().addOnCompleteListener { task ->
-                                    if (task.isSuccessful) {
-                                        // Actualizar el título en la lista y notificar al adaptador
-                                        audio.title = newFileName
-                                        audioAdapter.notifyDataSetChanged()
-                                        Toast.makeText(this, "Nombre actualizado a $newFileName", Toast.LENGTH_SHORT).show()
-                                    } else {
-                                        Toast.makeText(this, "Error al eliminar el archivo antiguo", Toast.LENGTH_SHORT).show()
-                                    }
-                                }
-                            }.addOnFailureListener {
-                                Toast.makeText(this, "Error al subir el archivo con el nuevo nombre", Toast.LENGTH_SHORT).show()
-                            }
-                        }.addOnFailureListener { exception ->
-                            Log.e("AudioActivity", "Error al descargar el archivo: ${exception.message}")
-                            Toast.makeText(this, "Error al descargar el archivo. El archivo no existe.", Toast.LENGTH_SHORT).show()
-                        }
-                    }.addOnFailureListener {
-                        Log.e("AudioActivity", "Error al verificar el archivo: ${audio.title}")
-                        // El archivo no existe o no se puede acceder
-                        Toast.makeText(this, "El archivo no existe en la ubicación especificada.", Toast.LENGTH_SHORT).show()
-                    }
+                    // Muestra mensaje de éxito
+                    Toast.makeText(this, "Nombre actualizado a ${audio.title}", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(this, "El título no puede estar vacío", Toast.LENGTH_SHORT).show()
                 }
-                dialogInterface.dismiss()  // Cerrar el diálogo
+                dialogInterface.dismiss()
             }
             .setNegativeButton("Cancelar") { dialogInterface, _ ->
-                dialogInterface.dismiss()  // Cerrar el diálogo
+                dialogInterface.dismiss()
             }
             .create()
 
-        dialog.show()  // Mostrar el cuadro de diálogo
+        dialog.show()
     }
 
+
     private fun deleteAudio(audio: Audio) {
-        // Codificar el nombre del archivo para manejar espacios y caracteres especiales
-        val encodedFileName = Uri.encode(audio.title)
-        // Asegurarse de que la ruta del archivo sea correcta
-        val audioRef = storageRef.child("audios/$encodedFileName") // Ruta completa del archivo
+        val audioRef = FirebaseStorage.getInstance().getReferenceFromUrl(audio.audioUrl)
         audioRef.delete().addOnSuccessListener {
             audioList.remove(audio)
             audioAdapter.notifyDataSetChanged()

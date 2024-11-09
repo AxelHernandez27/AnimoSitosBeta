@@ -6,16 +6,17 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 
     <!-- Permisos adicionales necesarios en Android 12 y posteriores -->
     <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
-
-
+    <uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE"/>
 
 
     <application
@@ -29,7 +30,7 @@
         android:theme="@style/Theme.AnimositosBeta"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".InitActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -53,10 +54,10 @@
             android:exported="true">
         </activity>
 
-        <activity
+        <!--<activity
             android:name=".InitActivity"
             android:exported="true">
-        </activity>
+        </activity>-->
 
         <activity
             android:name=".NotificationsActivity"

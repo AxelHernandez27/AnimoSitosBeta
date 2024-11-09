@@ -2,6 +2,7 @@ package com.example.animositosbeta
 
 import android.content.Context
 import android.media.MediaPlayer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +28,7 @@ class AudioAdapter(
 
     override fun onBindViewHolder(holder: AudioViewHolder, position: Int) {
         val audio = audioList[position]
+        Log.d("AudioAdapter", "Audio cargado: $audio")
         holder.bind(audio)
 
         // Configuración del botón de reproducción
@@ -52,15 +54,12 @@ class AudioAdapter(
     override fun getItemCount(): Int = audioList.size
 
     private fun playAudio(audio: Audio, holder: AudioViewHolder, position: Int) {
-        // Detener cualquier audio en reproducción
         stopAudio()
-
         mediaPlayer = MediaPlayer().apply {
             setDataSource(audio.audioUrl)
             prepare()
             start()
         }
-
         currentPlayingPosition = position
         holder.updateSeekBar()
     }
@@ -82,7 +81,6 @@ class AudioAdapter(
         fun bind(audio: Audio) {
             audioTitle.text = audio.title
             audioDateTime.text = audio.dateTime
-            playButton.setImageResource(if (adapterPosition == currentPlayingPosition) R.drawable.play_pause_24px else R.drawable.play_pause_24px)
             seekBar.progress = 0
         }
 

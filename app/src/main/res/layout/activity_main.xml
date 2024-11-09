@@ -28,26 +28,26 @@
         android:id="@+id/email"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:hint="Usuario"
+        android:layout_marginTop="20dp"
+        android:drawableLeft="@drawable/baseline_email_24"
+        android:hint="Email"
         android:inputType="text"
         android:padding="10dp"
-        android:layout_marginTop="20dp"
         android:textColor="#FFFFFFFF"
-        android:textColorHint="#FFFFFFFF"
-         />
+        android:textColorHint="#FFFFFFFF" />
 
     <!-- Campo de texto para la contraseña -->
     <EditText
         android:id="@+id/password"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:drawableLeft="@drawable/password_svgrepo_com__1_"
         android:hint="Contraseña"
         android:inputType="textPassword"
         android:padding="10dp"
-        android:layout_marginTop="10dp"
         android:textColor="#FFFFFFFF"
-        android:textColorHint="#FFFFFFFF"
-         />
+        android:textColorHint="#FFFFFFFF" />
 
     <Button
         android:id="@+id/login"
