@@ -10,138 +10,116 @@ import android.widget.SeekBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class AudioAdapter( private val context: Context,
-                    private val audioUrls: List<String>,
-                    private val onAudioClick: (String) -> Unit) :
-    RecyclerView.Adapter<AudioAdapter.AudioViewHolder>() {
+class AudioAdapter(
+    private val context: Context,
+    private val audioList: List<Audio>,
+    private val onEditClick: (Audio) -> Unit,
+    private val onDeleteClick: (Audio) -> Unit
+) : RecyclerView.Adapter<AudioAdapter.AudioViewHolder>() {
 
     private var mediaPlayer: MediaPlayer? = null
-
-    private var isPlaying = false
-    private var currentSeekBar: SeekBar? = null
-    private var currentButton: ImageButton? = null
-    private var currentPosition = -1 // Controla la posición actual del audio
+    private var currentPlayingPosition: Int = -1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AudioViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.audio_item_layout, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.audio_item_layout, parent, false)
         return AudioViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: AudioViewHolder, position: Int) {
-        val audioUrl = audioUrls[position]
-        holder.bind(audioUrl)
+        val audio = audioList[position]
+        holder.bind(audio)
 
-        holder.itemView.setOnClickListener {
-            currentButton = holder.btnPlayPause
-            currentSeekBar = holder.seekBarAudio
-            if (isPlaying && currentPosition == position) {
-                pauseAudio() // Si ya está reproduciendo, pausar
+        // Configuración del botón de reproducción
+        holder.playButton.setOnClickListener {
+            if (currentPlayingPosition == position) {
+                stopAudio()
             } else {
-                if (isPlaying) {
-                    stopAudio() // Si está reproduciendo otra canción, detener
-                }
-                playAudio(audioUrl, holder.seekBarAudio, holder.btnPlayPause, position)
+                playAudio(audio, holder, position)
             }
+        }
+
+        // Configuración del botón de editar
+        holder.editButton.setOnClickListener {
+            onEditClick(audio)
+        }
+
+        // Configuración del botón de eliminar
+        holder.deleteButton.setOnClickListener {
+            onDeleteClick(audio)
         }
     }
 
-    override fun getItemCount() = audioUrls.size
+    override fun getItemCount(): Int = audioList.size
+
+    private fun playAudio(audio: Audio, holder: AudioViewHolder, position: Int) {
+        // Detener cualquier audio en reproducción
+        stopAudio()
+
+        mediaPlayer = MediaPlayer().apply {
+            setDataSource(audio.audioUrl)
+            prepare()
+            start()
+        }
+
+        currentPlayingPosition = position
+        holder.updateSeekBar()
+    }
+
+    private fun stopAudio() {
+        mediaPlayer?.release()
+        mediaPlayer = null
+        currentPlayingPosition = -1
+    }
 
     inner class AudioViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val audioTitle: TextView = itemView.findViewById(R.id.audioTitle)
         val audioDateTime: TextView = itemView.findViewById(R.id.audioDateTime)
-        val btnPlayPause: ImageButton = itemView.findViewById(R.id.btnPlayPause)
-        val seekBarAudio: SeekBar = itemView.findViewById(R.id.seekBarAudio)
+        val playButton: ImageButton = itemView.findViewById(R.id.btnPlayPause)
+        val editButton: ImageButton = itemView.findViewById(R.id.btnEdit)
+        val deleteButton: ImageButton = itemView.findViewById(R.id.btnDelete)
+        private val seekBar: SeekBar = itemView.findViewById(R.id.seekBarAudio)
 
-        fun bind(audioUrl: String) {
-            audioTitle.text = "Título de Audio" // Aquí podrías reemplazar con datos reales
-            audioDateTime.text = "Fecha: 01/01/2024 12:00 PM" // Aquí podrías reemplazar con datos reales
+        fun bind(audio: Audio) {
+            audioTitle.text = audio.title
+            audioDateTime.text = audio.dateTime
+            playButton.setImageResource(if (adapterPosition == currentPlayingPosition) R.drawable.play_pause_24px else R.drawable.play_pause_24px)
+            seekBar.progress = 0
+        }
 
-            // Configura el SeekBar para la duración del audio
-            seekBarAudio.max = mediaPlayer?.duration ?: 0
-
-            // Configura el SeekBar
-            seekBarAudio.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-                override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                    if (fromUser) {
-                        mediaPlayer?.seekTo(progress) // Mueve el audio a la posición seleccionada
+        fun updateSeekBar() {
+            mediaPlayer?.let { player ->
+                seekBar.max = player.duration
+                val handler = android.os.Handler()
+                val runnable = object : Runnable {
+                    override fun run() {
+                        try {
+                            seekBar.progress = player.currentPosition
+                            handler.postDelayed(this, 500)
+                        } catch (e: Exception) {
+                            seekBar.progress = 0
+                        }
                     }
                 }
+                handler.post(runnable)
 
-                override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-                override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-            })
-
-            btnPlayPause.setOnClickListener {
-                if (isPlaying) {
-                    pauseAudio()
-                } else {
-                    playAudio(audioUrl, seekBarAudio, btnPlayPause, adapterPosition)
-                }
-            }
-        }
-    }
-
-    private fun playAudio(audioUrl: String, seekBar: SeekBar, button: ImageButton, position: Int) {
-        mediaPlayer?.release() // Libera el MediaPlayer anterior si existe
-        mediaPlayer = MediaPlayer().apply {
-            setDataSource(audioUrl)
-            prepareAsync()
-            setOnPreparedListener {
-                start() // Comienza la reproducción
-                this@AudioAdapter.isPlaying = true // Cambia el estado a reproduciendo
-                this@AudioAdapter.currentPosition = position // Guarda la posición actual
-                button.setImageResource(R.drawable.play_pause_24px) // Cambia al ícono de pausa
-                updateSeekBar(seekBar) // Inicia la actualización del SeekBar
-            }
-            setOnCompletionListener {
-                this@AudioAdapter.isPlaying = false // Cambia el estado a no reproduciendo
-                this@AudioAdapter.currentPosition = -1 // Resetea la posición actual
-                button.setImageResource(R.drawable.play_pause_24px) // Cambia al ícono de reproducción
-                seekBar.progress = 0 // Reinicia la barra de progreso
-            }
-        }
-    }
-
-    private fun pauseAudio() {
-        mediaPlayer?.let {
-            if (it.isPlaying) {
-                it.pause() // Pausa el audio
-                isPlaying = false // Cambia el estado a no reproduciendo
-                currentButton?.setImageResource(R.drawable.play_pause_24px) // Cambia al ícono de reproducción
-            }
-        }
-    }
-
-    private fun stopAudio() {
-        mediaPlayer?.let {
-            it.stop() // Detiene el audio
-            isPlaying = false // Cambia el estado a no reproduciendo
-            currentButton?.setImageResource(R.drawable.play_pause_24px) // Cambia al ícono de reproducción
-        }
-        currentSeekBar?.progress = 0 // Reinicia la barra de progreso
-        currentPosition = -1 // Resetea la posición actual
-    }
-
-    private fun updateSeekBar(seekBar: SeekBar) {
-        Thread {
-            while (isPlaying) {
-                try {
-                    Thread.sleep(1000) // Actualiza cada segundo
-                    mediaPlayer?.let {
-                        seekBar.progress = it.currentPosition // Actualiza la barra de progreso
+                seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                    override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                        if (fromUser) {
+                            player.seekTo(progress)
+                        }
                     }
-                } catch (e: InterruptedException) {
-                    e.printStackTrace()
-                }
+
+                    override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+                    override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+                })
             }
-        }.start()
+        }
     }
 
     override fun onViewRecycled(holder: AudioViewHolder) {
         super.onViewRecycled(holder)
-        mediaPlayer?.release() // Libera el MediaPlayer al reciclar la vista
-        isPlaying = false // Resetea el estado de reproducción
-        currentPosition = -1 // Resetea la posición actual
+        if (currentPlayingPosition == holder.adapterPosition) {
+            stopAudio()
+        }
     }
 }

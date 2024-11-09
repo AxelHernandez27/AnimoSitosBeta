@@ -16,6 +16,7 @@ class InitActivity : AppCompatActivity() {
         val btnDirectorio: Button = findViewById(R.id.btn_directorio)
         val btnAudios: Button = findViewById(R.id.btn_registro)
 
+
         btnNotificaciones.setOnClickListener {
             // Inicia la actividad de Notificaciones
             val intent = Intent(this, NotificationsActivity::class.java).apply {
