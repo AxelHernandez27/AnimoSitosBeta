@@ -17,7 +17,7 @@ class BluetoothService(private val context: Context) {
     private var bluetoothSocket: BluetoothSocket? = null
     private var outputStream: OutputStream? = null
     private var inputStream: InputStream? = null
-    private val uuid = UUID.fromString("0000110A-0000-1000-8000-00805F9B34FB")  // A2DP
+    private val uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")  // A2DP
 
     // Conectar al dispositivo Bluetooth
     @SuppressLint("MissingPermission")
