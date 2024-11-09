@@ -19,7 +19,7 @@ class InitActivity : AppCompatActivity() {
 
     private lateinit var bluetoothService: BluetoothService
     private val bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
-
+    private var isRecording = false
     private lateinit var btnGrabar: Button
 
     // Solicitar permisos en tiempo de ejecución
@@ -83,6 +83,13 @@ class InitActivity : AppCompatActivity() {
                 // Buscar dispositivos Bluetooth
                 discoverDevices()
             }
+            if (isRecording) {
+                // Detener la grabación si ya estamos grabando
+                stopRecording()
+            } else {
+                // Iniciar la grabación
+                startRecording()
+            }
         }
     }
 
@@ -121,32 +128,40 @@ class InitActivity : AppCompatActivity() {
         val pairedDevices: Set<BluetoothDevice> = bluetoothAdapter?.bondedDevices ?: return
         for (device in pairedDevices) {
             Log.d("InitActivity", "Dispositivo encontrado: ${device.name}, ${device.address}")
-            if (device.name == "YourDeviceName") { // Asegúrate de que coincida con el nombre de tu grabadora
+            if (device.name == "N5_e3") { // Asegúrate de que coincida con el nombre de tu grabadora
                 if (bluetoothService.connectToBluetoothDevice(device)) {
                     startRecording()  // Inicia la grabación
+                    return // Ya encontramos el dispositivo, no necesitamos seguir buscando
                 }
             }
         }
+        // Si no encontramos el dispositivo, puedes mostrar un mensaje de error o intentar nuevamente
+        Toast.makeText(this, "Dispositivo no encontrado", Toast.LENGTH_SHORT).show()
     }
 
     private fun startRecording() {
-        // Cambiar color del botón a rojo
+        // Cambiar el color del botón a rojo y cambiar el icono a micrófono
         btnGrabar.setBackgroundColor(resources.getColor(android.R.color.holo_red_dark))
-        btnGrabar.text = "Grabando..."
+        btnGrabar.text = "Detener grabación"
 
         // Iniciar la grabación en el BluetoothService
         bluetoothService.startRecording()
 
-        // Aquí puedes agregar una forma de detener la grabación, como un temporizador o un botón de detener grabación
+        // Actualizar el estado
+        isRecording = true
     }
 
     private fun stopRecording() {
-        // Cambiar color del botón a su estado original
-        btnGrabar.setBackgroundColor(resources.getColor(android.R.color.darker_gray))
+        // Cambiar el color del botón a verde y restaurar el icono de micrófono
+        btnGrabar.setBackgroundColor(resources.getColor(android.R.color.holo_green_dark))
+        btnGrabar.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_mic, 0, 0, 0) // Cambiar de vuelta al icono original
         btnGrabar.text = "Grabar"
 
-        // Detener la grabación
+        // Detener la grabación en el BluetoothService
         bluetoothService.stopRecording()
+
+        // Actualizar el estado
+        isRecording = false
     }
 
     override fun onDestroy() {
