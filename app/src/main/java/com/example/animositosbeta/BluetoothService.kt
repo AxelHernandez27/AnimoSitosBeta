@@ -22,19 +22,36 @@ class BluetoothService(private val context: Context) {
     // Conectar al dispositivo Bluetooth
     @SuppressLint("MissingPermission")
     fun connectToBluetoothDevice(device: BluetoothDevice): Boolean {
-        return try {
-            bluetoothSocket = device.createRfcommSocketToServiceRecord(uuid)
-            bluetoothSocket?.connect()
-            outputStream = bluetoothSocket?.outputStream
-            inputStream = bluetoothSocket?.inputStream
-            Log.d("BluetoothService", "Conexión exitosa con el dispositivo")
-            true
-        } catch (e: IOException) {
-            Log.e("BluetoothService", "Error al conectar con el dispositivo", e)
-            close()  // Cerrar el socket en caso de error
-            false
+        var isConnected = false
+        var attempt = 0
+        val maxAttempts = 3  // Número máximo de intentos para conectar
+
+        while (!isConnected && attempt < maxAttempts) {
+            try {
+                bluetoothSocket = device.createRfcommSocketToServiceRecord(uuid)
+                bluetoothSocket?.connect()
+                outputStream = bluetoothSocket?.outputStream
+                inputStream = bluetoothSocket?.inputStream
+                isConnected = true
+                Log.d("BluetoothService", "Conexión exitosa con el dispositivo")
+            } catch (e: IOException) {
+                attempt++
+                Log.e("BluetoothService", "Error al conectar con el dispositivo. Intento #$attempt", e)
+                if (attempt >= maxAttempts) {
+                    Log.e("BluetoothService", "No se pudo conectar después de $maxAttempts intentos.")
+                    return false
+                }
+                // Esperar un poco antes de intentar nuevamente
+                try {
+                    Thread.sleep(1000) // Esperar 1 segundo antes de reintentar
+                } catch (interrupted: InterruptedException) {
+                    Thread.currentThread().interrupt()
+                }
+            }
         }
+        return isConnected
     }
+
 
     // Iniciar la grabación
     fun startRecording() {
