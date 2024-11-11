@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
 
         db = FirebaseFirestore.getInstance()
 
+        // Botón de inicio de sesión
         val loginButton: Button = findViewById(R.id.login)
         loginButton.setOnClickListener {
             val emailEditText: EditText = findViewById(R.id.email)
@@ -32,6 +33,14 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show()
             }
         }
+
+        // Botón de registro
+        val registerButton: Button = findViewById(R.id.register)
+        registerButton.setOnClickListener {
+            // Crear un Intent para abrir RegisterActivity
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun authenticateUser(email: String, password: String) {
@@ -44,7 +53,7 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this, "Email o contraseña incorrectos", Toast.LENGTH_SHORT).show()
                 } else {
                     val userID = document.documents[0].id
-                    fetchParentID(userID) // Llama a la función para obtener el `parentID`
+                    fetchParentID(userID)
                 }
             }
             .addOnFailureListener { e ->
@@ -59,7 +68,7 @@ class MainActivity : AppCompatActivity() {
             .addOnSuccessListener { documents ->
                 if (!documents.isEmpty) {
                     val parentID = documents.documents[0].id
-                    fetchKidName(parentID) // Obtiene el nombre del niño usando el `parentID`
+                    fetchKidName(parentID)
                 }
             }
             .addOnFailureListener { e ->
@@ -75,7 +84,7 @@ class MainActivity : AppCompatActivity() {
                 if (!documents.isEmpty) {
                     val kidName = documents.documents[0].getString("name") ?: ""
                     val intent = Intent(this, InitActivity::class.java).apply {
-                        putExtra("kidName", kidName) // Pasa el nombre del niño
+                        putExtra("kidName", kidName)
                     }
                     startActivity(intent)
                 }

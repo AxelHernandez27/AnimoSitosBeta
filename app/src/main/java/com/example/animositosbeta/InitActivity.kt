@@ -68,7 +68,6 @@ class InitActivity : AppCompatActivity() {
         }
 
         btnGrabar.setOnClickListener {
-            // Verificar si el dispositivo tiene Bluetooth habilitado y se puede conectar
             if (bluetoothAdapter == null) {
                 Log.e("InitActivity", "Bluetooth no es compatible con este dispositivo")
                 return@setOnClickListener
@@ -81,7 +80,6 @@ class InitActivity : AppCompatActivity() {
                 discoverDevices()
             }
 
-            // Alternar entre grabación y detención
             if (isRecording) {
                 stopRecording()
             } else {
@@ -94,7 +92,6 @@ class InitActivity : AppCompatActivity() {
         val bluetoothConnectPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT)
         val locationPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
 
-        // Si no se tienen los permisos necesarios, solicitarlos
         if (bluetoothConnectPermission != PackageManager.PERMISSION_GRANTED ||
             locationPermission != PackageManager.PERMISSION_GRANTED) {
             bluetoothPermissionRequest.launch(
